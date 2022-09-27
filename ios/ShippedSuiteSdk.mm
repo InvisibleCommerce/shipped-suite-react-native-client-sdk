@@ -66,6 +66,24 @@ RCT_EXPORT_METHOD(displayLearnMoreModal:(NSString *)type)
     });
 }
 
+RCT_REMAP_METHOD(getOffersFee,
+                 amount:(NSString *)amount
+                 withResolver:(RCTPromiseResolveBlock)resolve
+                 withRejecter:(RCTPromiseRejectBlock)reject)
+{
+    [ShippedSuite getOffersFee:[[NSDecimalNumber alloc] initWithString:amount] completion:^(SSOffers * _Nullable offers, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"Failed to get offers fee: %@", error.localizedDescription);
+            resolve(error.localizedDescription);
+            return;
+        }
+        
+        NSLog(@"Get shield fee: %@", offers.shieldFee.stringValue);
+        NSLog(@"Get green fee: %@", offers.greenFee.stringValue);
+        resolve(@{@"storefrontId": offers.storefrontId ?: @"", @"orderValue": offers.orderValue ?: @"", @"shieldFee": offers.shieldFee ?: @"", @"greenFee": offers.greenFee ?: @"", @"offeredAt": offers.offeredAt.description ?: @""});
+    }];
+}
+
 // Don't compile this code when we build for the old architecture.
 #ifdef RCT_NEW_ARCH_ENABLED
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:

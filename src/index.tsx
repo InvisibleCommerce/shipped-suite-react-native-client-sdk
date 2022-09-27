@@ -30,3 +30,7 @@ export function configure(serializable: {string: any}) {
 export function displayLearnMoreModal(type: string) {
   return ShippedSuiteSdk.displayLearnMoreModal(type)
 }
+
+export function getOffersFee(amount: string): Promise<{string: any}> {
+  return ShippedSuiteSdk.getOffersFee(amount);
+}
