@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
-import { multiply, getName } from 'react-native-shipped-suite-sdk';
+import { multiply, getName, configure } from 'react-native-shipped-suite-sdk';
 
 export default function App() {
   const [result, setResult] = React.useState<number | undefined>();
@@ -11,6 +11,8 @@ export default function App() {
     console.log(name);
 
     multiply(3, 7).then(setResult);
+
+    configure({"publicKey": "pk_development_117c2ee46c122fb0ce070fbc984e6a4742040f05a1c73f8a900254a1933a0112"});
   }, []);
 
   return (

@@ -22,3 +22,7 @@ export function multiply(a: number, b: number): Promise<number> {
 export function getName(): Promise<number> {
   return ShippedSuiteSdk.getName();
 }
+
+export function configure(serializable: {string: any}) {
+  return ShippedSuiteSdk.configure(serializable);
+}

@@ -4,6 +4,12 @@
 #import "RNShippedSuiteSdkSpec.h"
 #endif
 
+#import <ShippedSuite/ShippedSuite.h>
+#import <React/RCTConvert.h>
+#import <React/RCTUtils.h>
+
+static NSString* const kRNShippedSuiteConfigPublicKeyKey = @"publicKey";
+
 @implementation ShippedSuiteSdk
 RCT_EXPORT_MODULE()
 
@@ -22,6 +28,13 @@ RCT_REMAP_METHOD(multiply,
 RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(getName)
 {
     return [[UIDevice currentDevice] name];
+}
+
+RCT_EXPORT_METHOD(configure:(NSDictionary*)configuration)
+{
+    NSString *publicKey = [RCTConvert NSString:configuration[kRNShippedSuiteConfigPublicKeyKey]];
+    [ShippedSuite configurePublicKey:publicKey];
+    NSLog(@"%@", publicKey);
 }
 
 // Don't compile this code when we build for the old architecture.
