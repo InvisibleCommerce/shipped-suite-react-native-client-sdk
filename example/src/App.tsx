@@ -10,7 +10,8 @@ import {
 import {
   configure,
   displayLearnMoreModal,
-  getOffersFee
+  getOffersFee,
+  WidgetView
 } from 'react-native-shipped-suite-sdk';
 
 export default function App() {
@@ -35,6 +36,9 @@ export default function App() {
         <Text style={styles.title}>Order Value:</Text>
         <TextInput style={styles.input} defaultValue={amount} onChangeText={handleInput} />
       </View>
+      <WidgetView style={styles.widget} type={1} onChange={(values) => {
+        console.log(values)
+      }}/>
       <TouchableHighlight
         style={styles.buttonContainer}
         onPress={() => displayLearnMoreModal('shield')}
@@ -79,6 +83,11 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     borderColor: '#EEEEEE',
     borderWidth: 1,
+  },
+  widget: {
+    marginHorizontal: 16,
+    marginTop: 16,
+    minHeight: 31
   },
   buttonContainer: {
     marginTop: 16,
