@@ -15,14 +15,6 @@ const ShippedSuiteSdk = NativeModules.ShippedSuiteSdk  ? NativeModules.ShippedSu
       }
     );
 
-export function multiply(a: number, b: number): Promise<number> {
-  return ShippedSuiteSdk.multiply(a, b);
-}
-
-export function getName(): Promise<number> {
-  return ShippedSuiteSdk.getName();
-}
-
 export function configure(serializable: {string: any}) {
   return ShippedSuiteSdk.configure(serializable);
 }

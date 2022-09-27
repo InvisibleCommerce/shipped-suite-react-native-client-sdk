@@ -24,23 +24,6 @@ ShippedSuiteType FormatShippedSuiteTypeString(NSString *type)
 @implementation ShippedSuiteSdk
 RCT_EXPORT_MODULE()
 
-// Example method
-// See // https://reactnative.dev/docs/native-modules-ios
-RCT_REMAP_METHOD(multiply,
-                 multiplyWithA:(double)a withB:(double)b
-                 withResolver:(RCTPromiseResolveBlock)resolve
-                 withRejecter:(RCTPromiseRejectBlock)reject)
-{
-  NSNumber *result = @(a * b);
-
-  resolve(result);
-}
-
-RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(getName)
-{
-    return [[UIDevice currentDevice] name];
-}
-
 RCT_EXPORT_METHOD(configure:(NSDictionary*)configuration)
 {
     NSString *publicKey = [RCTConvert NSString:configuration[kRNShippedSuiteConfigPublicKey]];
@@ -80,7 +63,7 @@ RCT_REMAP_METHOD(getOffersFee,
         
         NSLog(@"Get shield fee: %@", offers.shieldFee.stringValue);
         NSLog(@"Get green fee: %@", offers.greenFee.stringValue);
-        resolve(@{@"storefrontId": offers.storefrontId ?: @"", @"orderValue": offers.orderValue ?: @"", @"shieldFee": offers.shieldFee ?: @"", @"greenFee": offers.greenFee ?: @"", @"offeredAt": offers.offeredAt.description ?: @""});
+        resolve(@{@"storefrontId": offers.storefrontId ?: @"", @"orderValue": offers.orderValue.stringValue ?: @"", @"shieldFee": offers.shieldFee.stringValue ?: @"", @"greenFee": offers.greenFee.stringValue ?: @"", @"offeredAt": offers.offeredAt.description ?: @""});
     }];
 }
 
