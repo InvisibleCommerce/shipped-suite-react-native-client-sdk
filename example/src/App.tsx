@@ -1,7 +1,10 @@
 import * as React from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply, getName, configure } from 'react-native-shipped-suite-sdk';
+import { StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import {
+  configure,
+  displayLearnMoreModal, getName, multiply
+} from 'react-native-shipped-suite-sdk';
 
 export default function App() {
   const [result, setResult] = React.useState<number | undefined>();
@@ -12,12 +15,19 @@ export default function App() {
 
     multiply(3, 7).then(setResult);
 
-    configure({"publicKey": "pk_development_117c2ee46c122fb0ce070fbc984e6a4742040f05a1c73f8a900254a1933a0112", "mode": "production"});
+    configure({
+      publicKey:
+        'pk_development_117c2ee46c122fb0ce070fbc984e6a4742040f05a1c73f8a900254a1933a0112',
+      mode: 'production',
+    });
   }, []);
 
   return (
     <View style={styles.container}>
       <Text>Result: {result}</Text>
+      <TouchableHighlight onPress={() => displayLearnMoreModal('shield')}>
+        <Text>Display Learn More Modal</Text>
+      </TouchableHighlight>
     </View>
   );
 }

@@ -11,6 +11,16 @@
 static NSString* const kRNShippedSuiteConfigPublicKey = @"publicKey";
 static NSString* const kRNShippedSuiteConfigMode = @"mode";
 
+ShippedSuiteType FormatShippedSuiteTypeString(NSString *type)
+{
+    if ([type isEqualToString:@"green"]) {
+        return ShippedSuiteTypeGreen;
+    } else if ([type isEqualToString:@"green_and_shield"]) {
+        return ShippedSuiteTypeGreenAndShield;
+    }
+    return ShippedSuiteTypeShield;
+}
+
 @implementation ShippedSuiteSdk
 RCT_EXPORT_MODULE()
 
@@ -39,6 +49,21 @@ RCT_EXPORT_METHOD(configure:(NSDictionary*)configuration)
     if ([mode isEqualToString:@"production"]) {
         [ShippedSuite setMode:ShippedSuiteModeProduction];
     }
+}
+
+RCT_EXPORT_METHOD(displayLearnMoreModal:(NSString *)type)
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        SSLearnMoreViewController *controller = [[SSLearnMoreViewController alloc] initWithType:FormatShippedSuiteTypeString(type)];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
+        if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            nav.modalPresentationStyle = UIModalPresentationFormSheet;
+            nav.preferredContentSize = CGSizeMake(650, 600);
+        }
+    
+        UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
+        [rootViewController presentViewController:nav animated:YES completion:nil];
+    });
 }
 
 // Don't compile this code when we build for the old architecture.

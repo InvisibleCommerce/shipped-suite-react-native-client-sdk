@@ -26,3 +26,7 @@ export function getName(): Promise<number> {
 export function configure(serializable: {string: any}) {
   return ShippedSuiteSdk.configure(serializable);
 }
+
+export function displayLearnMoreModal(type: string) {
+  return ShippedSuiteSdk.displayLearnMoreModal(type)
+}
