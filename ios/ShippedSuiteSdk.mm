@@ -8,7 +8,8 @@
 #import <React/RCTConvert.h>
 #import <React/RCTUtils.h>
 
-static NSString* const kRNShippedSuiteConfigPublicKeyKey = @"publicKey";
+static NSString* const kRNShippedSuiteConfigPublicKey = @"publicKey";
+static NSString* const kRNShippedSuiteConfigMode = @"mode";
 
 @implementation ShippedSuiteSdk
 RCT_EXPORT_MODULE()
@@ -32,9 +33,12 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(getName)
 
 RCT_EXPORT_METHOD(configure:(NSDictionary*)configuration)
 {
-    NSString *publicKey = [RCTConvert NSString:configuration[kRNShippedSuiteConfigPublicKeyKey]];
+    NSString *publicKey = [RCTConvert NSString:configuration[kRNShippedSuiteConfigPublicKey]];
+    NSString *mode = [RCTConvert NSString:configuration[kRNShippedSuiteConfigMode]];
     [ShippedSuite configurePublicKey:publicKey];
-    NSLog(@"%@", publicKey);
+    if ([mode isEqualToString:@"production"]) {
+        [ShippedSuite setMode:ShippedSuiteModeProduction];
+    }
 }
 
 // Don't compile this code when we build for the old architecture.

@@ -12,7 +12,7 @@ export default function App() {
 
     multiply(3, 7).then(setResult);
 
-    configure({"publicKey": "pk_development_117c2ee46c122fb0ce070fbc984e6a4742040f05a1c73f8a900254a1933a0112"});
+    configure({"publicKey": "pk_development_117c2ee46c122fb0ce070fbc984e6a4742040f05a1c73f8a900254a1933a0112", "mode": "production"});
   }, []);
 
   return (
