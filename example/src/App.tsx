@@ -1,9 +1,11 @@
 import * as React from 'react';
 
 import {
+  NativeSyntheticEvent,
   StyleSheet,
   Text,
   TextInput,
+  TextInputSubmitEditingEventData,
   TouchableHighlight,
   View
 } from 'react-native';
@@ -17,10 +19,14 @@ import {
 export default function App() {
   const [amount, setAmount] = React.useState('129.99');
 
-  const handleInput = (text: string) => {
-    console.log('On change:', text);
-    setAmount(text);
+  const onSubmitEditing = (
+    event: NativeSyntheticEvent<TextInputSubmitEditingEventData>
+  ) => {
+    console.log('On change:', event.nativeEvent.text);
+    setAmount(event.nativeEvent.text);
   };
+
+  const widgetRef = React.useRef<any>(null);
 
   React.useEffect(() => {
     configure({
@@ -30,27 +36,47 @@ export default function App() {
     });
   }, []);
 
+  React.useEffect(() => {
+    widgetRef.current?.updateOrderValue(amount);
+  }, [amount]);
+
   return (
     <View style={styles.container}>
+      {/* Input Order Value */}
       <View style={styles.row}>
         <Text style={styles.title}>Order Value:</Text>
-        <TextInput style={styles.input} defaultValue={amount} onChangeText={handleInput} />
+        <TextInput
+          style={styles.input}
+          defaultValue={amount}
+          onSubmitEditing={onSubmitEditing}
+        />
       </View>
-      <WidgetView style={styles.widget} type={1} onChange={(values) => {
-        console.log(values)
-      }}/>
+
+      {/* Widget View */}
+      <WidgetView
+        ref={widgetRef}
+        style={styles.widget}
+        type={1}
+        onChange={(event) => {
+          console.log('Widget on change:', event.nativeEvent);
+        }}
+      />
+
+      {/* Display Learn More Modal */}
       <TouchableHighlight
         style={styles.buttonContainer}
         onPress={() => displayLearnMoreModal('shield')}
       >
         <Text style={styles.button}>Display Learn More Modal</Text>
       </TouchableHighlight>
+
+      {/* Get Offers Fee */}
       <TouchableHighlight
         style={styles.buttonContainer}
         onPress={() =>
           getOffersFee(amount)
-            .then((results) => console.log(results))
-            .catch((error) => console.log(error))
+            .then((results) => console.log('Get offers fee:', results))
+            .catch((error) => console.log('Failed to get offers fee:', error))
         }
       >
         <Text style={styles.button}>Send Offers Fee Request</Text>
@@ -87,7 +113,7 @@ const styles = StyleSheet.create({
   widget: {
     marginHorizontal: 16,
     marginTop: 16,
-    minHeight: 31
+    minHeight: 31,
   },
   buttonContainer: {
     marginTop: 16,

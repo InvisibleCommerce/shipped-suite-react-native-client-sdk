@@ -19,11 +19,15 @@
 
 @implementation RNWidgetViewManager
 
-RCT_EXPORT_MODULE()
+RCT_EXPORT_MODULE(RNWidgetView)
 
 RCT_EXPORT_VIEW_PROPERTY(type, NSInteger)
 RCT_EXPORT_VIEW_PROPERTY(isRespectServer, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(onChange, RCTBubblingEventBlock)
+
+RCT_EXPORT_METHOD(updateOrderValue: (nonnull NSNumber *)reactTag amount: (nonnull NSString *)amount) {
+    [self.widgetView updateOrderValue:[NSDecimalNumber decimalNumberWithString:amount]];
+}
 
 - (UIView *)view
 {

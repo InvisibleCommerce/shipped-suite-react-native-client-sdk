@@ -29,4 +29,5 @@ export function getOffersFee(amount: string): Promise<{ string: any }> {
   return ShippedSuiteSdk.getOffersFee(amount);
 }
 
-export { NativeProps, WidgetView } from './WidgetViewIOS';
+export { WidgetView, WidgetViewProps } from './WidgetViewIOS';
+
