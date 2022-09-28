@@ -17,7 +17,7 @@ const ShippedSuiteSdk = NativeModules.ShippedSuiteSdk
       }
     );
 
-export function configure(serializable: { string: any }) {
+export function configure(serializable: { publicKey: string, mode: string }) {
   return ShippedSuiteSdk.configure(serializable);
 }
 
