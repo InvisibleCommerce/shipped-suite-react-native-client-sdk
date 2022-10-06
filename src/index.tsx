@@ -6,7 +6,7 @@ const LINKING_ERROR =
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo managed workflow\n';
 
-const ShippedSuiteSdk = NativeModules.ShippedSuiteSdk
+export const ShippedSuite = NativeModules.ShippedSuiteSdk
   ? NativeModules.ShippedSuiteSdk
   : new Proxy(
       {},
@@ -17,17 +17,17 @@ const ShippedSuiteSdk = NativeModules.ShippedSuiteSdk
       }
     );
 
-export function configure(serializable: { publicKey: string, mode: string }) {
-  return ShippedSuiteSdk.configure(serializable);
+export function configure(serializable: { publicKey: string; mode: string }) {
+  return ShippedSuite.configure(serializable);
 }
 
 export function displayLearnMoreModal(type: string) {
-  return ShippedSuiteSdk.displayLearnMoreModal(type);
+  return ShippedSuite.displayLearnMoreModal(type);
 }
 
 export function getOffersFee(amount: string): Promise<{ string: any }> {
-  return ShippedSuiteSdk.getOffersFee(amount);
+  return ShippedSuite.getOffersFee(amount);
 }
 
-export { WidgetView, WidgetViewProps } from './WidgetViewIOS';
+export { ShippedSuiteType, WidgetView, WidgetViewProps } from './WidgetViewIOS';
 

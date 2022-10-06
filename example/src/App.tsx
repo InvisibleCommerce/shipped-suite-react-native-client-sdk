@@ -10,9 +10,8 @@ import {
   View
 } from 'react-native';
 import {
-  configure,
-  displayLearnMoreModal,
-  getOffersFee,
+  ShippedSuite,
+  ShippedSuiteType,
   WidgetView
 } from 'react-native-shipped-suite-sdk';
 
@@ -29,7 +28,7 @@ export default function App() {
   const widgetRef = React.useRef<any>(null);
 
   React.useEffect(() => {
-    configure({
+    ShippedSuite.configure({
       publicKey:
         'pk_development_117c2ee46c122fb0ce070fbc984e6a4742040f05a1c73f8a900254a1933a0112',
       mode: 'development',
@@ -56,7 +55,8 @@ export default function App() {
       <WidgetView
         ref={widgetRef}
         style={styles.widget}
-        type={1}
+        type={ShippedSuiteType.Green}
+        isRespectServer={true}
         onChange={(event) => {
           console.log('Widget on change:', event.nativeEvent);
         }}
@@ -65,7 +65,7 @@ export default function App() {
       {/* Display Learn More Modal */}
       <TouchableHighlight
         style={styles.buttonContainer}
-        onPress={() => displayLearnMoreModal('shield')}
+        onPress={() => ShippedSuite.displayLearnMoreModal('shield')}
       >
         <Text style={styles.button}>Display Learn More Modal</Text>
       </TouchableHighlight>
@@ -74,9 +74,11 @@ export default function App() {
       <TouchableHighlight
         style={styles.buttonContainer}
         onPress={() =>
-          getOffersFee(amount)
-            .then((results) => console.log('Get offers fee:', results))
-            .catch((error) => console.log('Failed to get offers fee:', error))
+          ShippedSuite.getOffersFee(amount)
+            .then((results: any) => console.log('Get offers fee:', results))
+            .catch((error: any) =>
+              console.log('Failed to get offers fee:', error)
+            )
         }
       >
         <Text style={styles.button}>Send Offers Fee Request</Text>
