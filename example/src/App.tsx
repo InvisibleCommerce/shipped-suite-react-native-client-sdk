@@ -39,7 +39,7 @@ export default function App() {
   };
 
   const displayLearnMoreModal = () => {
-    ShippedSuite.displayLearnMoreModal('green_and_shield');
+    ShippedSuite.displayLearnMoreModal(ShippedSuiteType.GreenAndShield);
   };
 
   const getOffersFee = () => {
@@ -71,7 +71,7 @@ export default function App() {
         <WidgetView
           ref={widgetRef}
           style={styles.widget}
-          type={ShippedSuiteType.Shield}
+          type={ShippedSuiteType.GreenAndShield}
           isRespectServer={true}
           onChange={onWidgetChange}
         />

@@ -39,8 +39,14 @@ class ShippedSuiteSdkModule(reactContext: ReactApplicationContext) :
   }
 
   @ReactMethod
-  fun displayLearnMoreModal(type: String) {
-    currentActivity?.let { LearnMoreDialog.show(it, ShippedSuiteType.valueOf(type.uppercase())) }
+  fun displayLearnMoreModal(type: Int) {
+    currentActivity?.let {
+      when (type) {
+        0 -> LearnMoreDialog.show(it, ShippedSuiteType.SHIELD)
+        1 -> LearnMoreDialog.show(it, ShippedSuiteType.GREEN)
+        2 -> LearnMoreDialog.show(it, ShippedSuiteType.GREEN_AND_SHIELD)
+      }
+    }
   }
 
   @ReactMethod

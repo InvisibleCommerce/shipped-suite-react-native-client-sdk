@@ -34,10 +34,10 @@ RCT_EXPORT_METHOD(configure:(NSDictionary *)configuration)
     }
 }
 
-RCT_EXPORT_METHOD(displayLearnMoreModal:(NSString *)type)
+RCT_EXPORT_METHOD(displayLearnMoreModal:(NSInteger)type)
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        SSLearnMoreViewController *controller = [[SSLearnMoreViewController alloc] initWithType:FormatShippedSuiteTypeString(type)];
+        SSLearnMoreViewController *controller = [[SSLearnMoreViewController alloc] initWithType:ShippedSuiteType(type)];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
         if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             nav.modalPresentationStyle = UIModalPresentationFormSheet;
