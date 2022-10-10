@@ -19,10 +19,18 @@ internal class WidgetChangedEvent constructor(
 
   private fun serializeEventData(): WritableMap {
     val eventData = Arguments.createMap()
-    eventData.putBoolean("isSelected", details["isSelected"] as Boolean)
-    eventData.putString("shieldFee", details["shieldFee"]?.toString())
-    eventData.putString("greenFee", details["greenFee"]?.toString())
-    eventData.putString("error", details["error"]?.toString())
+    if (details.containsKey("isSelected")) {
+      eventData.putBoolean("isSelected", details["isSelected"] as Boolean)
+    }
+    if (details.containsKey("shieldFee")) {
+      eventData.putString("shieldFee", details["shieldFee"]?.toString())
+    }
+    if (details.containsKey("greenFee")) {
+      eventData.putString("greenFee", details["greenFee"]?.toString())
+    }
+    if (details.containsKey("error")) {
+      eventData.putString("error", details["error"]?.toString())
+    }
     return eventData
   }
 

@@ -61,9 +61,7 @@ RCT_REMAP_METHOD(getOffersFee,
             return;
         }
         
-        NSLog(@"Get shield fee: %@", offers.shieldFee.stringValue);
-        NSLog(@"Get green fee: %@", offers.greenFee.stringValue);
-        resolve(@{@"storefrontId": offers.storefrontId ?: @"", @"orderValue": offers.orderValue.stringValue ?: @"", @"shieldFee": offers.shieldFee.stringValue ?: @"", @"greenFee": offers.greenFee.stringValue ?: @"", @"offeredAt": offers.offeredAt.description ?: @""});
+        resolve(@{@"storefrontId": offers.storefrontId ?: [NSNull null], @"orderValue": offers.orderValue.stringValue ?: [NSNull null], @"shieldFee": offers.shieldFee.stringValue ?: [NSNull null], @"greenFee": offers.greenFee.stringValue ?: [NSNull null], @"offeredAt": offers.offeredAt.description ?: [NSNull null]});
     }];
 }
 

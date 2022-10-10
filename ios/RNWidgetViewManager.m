@@ -40,25 +40,24 @@ RCT_EXPORT_METHOD(updateOrderValue: (nonnull NSNumber *)reactTag amount: (nonnul
 
 - (void)widgetView:(SSWidgetView *)widgetView onChange:(NSDictionary *)values
 {
-    BOOL isSelected = [values[SSWidgetViewIsSelectedKey] boolValue];
-    NSLog(@"Widget state: %@", isSelected ? @"YES" : @"NO");
-    
+    NSMutableDictionary *results = [NSMutableDictionary dictionary];
+    NSNumber *isSelected = values[SSWidgetViewIsSelectedKey];
+    if (isSelected) {
+        results[SSWidgetViewIsSelectedKey] = isSelected;
+    }
     NSDecimalNumber *shieldFee = values[SSWidgetViewShieldFeeKey];
     if (shieldFee) {
-        NSLog(@"Shield fee: %@", shieldFee.stringValue);
+        results[SSWidgetViewShieldFeeKey] = [shieldFee stringValue];
     }
-    
     NSDecimalNumber *greenFee = values[SSWidgetViewGreenFeeKey];
     if (greenFee) {
-        NSLog(@"Green fee: %@", greenFee.stringValue);
+        results[SSWidgetViewGreenFeeKey] = [greenFee stringValue];
     }
-    
     NSError *error = values[SSWidgetViewErrorKey];
     if (error) {
-        NSLog(@"Widget error: %@", error.localizedDescription);
+        results[SSWidgetViewErrorKey] = [error localizedDescription];
     }
-    
-    self.widgetView.onChange(values);
+    self.widgetView.onChange(results);
 }
 
 @end
