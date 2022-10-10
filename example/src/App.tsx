@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   },
   widget: {
     marginHorizontal: 16,
-    minHeight: Platform.OS === 'ios' ? 32 : 35,
+    height: Platform.OS === 'ios' ? 32 : 35,
   },
   buttonContainer: {
     marginTop: 16,
