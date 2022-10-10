@@ -24,7 +24,7 @@ ShippedSuiteType FormatShippedSuiteTypeString(NSString *type)
 @implementation ShippedSuiteSdk
 RCT_EXPORT_MODULE()
 
-RCT_EXPORT_METHOD(configure:(NSDictionary*)configuration)
+RCT_EXPORT_METHOD(configure:(NSDictionary *)configuration)
 {
     NSString *publicKey = [RCTConvert NSString:configuration[kRNShippedSuiteConfigPublicKey]];
     NSString *mode = [RCTConvert NSString:configuration[kRNShippedSuiteConfigMode]];
@@ -43,7 +43,7 @@ RCT_EXPORT_METHOD(displayLearnMoreModal:(NSString *)type)
             nav.modalPresentationStyle = UIModalPresentationFormSheet;
             nav.preferredContentSize = CGSizeMake(650, 600);
         }
-    
+        
         UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
         [rootViewController presentViewController:nav animated:YES completion:nil];
     });
@@ -70,7 +70,7 @@ RCT_REMAP_METHOD(getOffersFee,
 // Don't compile this code when we build for the old architecture.
 #ifdef RCT_NEW_ARCH_ENABLED
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
-    (const facebook::react::ObjCTurboModule::InitParams &)params
+(const facebook::react::ObjCTurboModule::InitParams &)params
 {
     return std::make_shared<facebook::react::NativeShippedSuiteSdkSpecJSI>(params);
 }

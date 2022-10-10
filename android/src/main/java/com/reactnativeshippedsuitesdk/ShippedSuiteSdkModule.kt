@@ -1,20 +1,69 @@
 package com.reactnativeshippedsuitesdk
-import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReactContextBaseJavaModule
-import com.facebook.react.bridge.ReactMethod
-import com.facebook.react.bridge.Promise
 
-class ShippedSuiteSdkModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
+import com.facebook.react.bridge.*
+import com.invisiblecommerce.shippedsuite.Mode
+import com.invisiblecommerce.shippedsuite.ShippedSuite
+import com.invisiblecommerce.shippedsuite.exception.ShippedException
+import com.invisiblecommerce.shippedsuite.model.ShippedOffers
+import com.invisiblecommerce.shippedsuite.ui.LearnMoreDialog
+import com.invisiblecommerce.shippedsuite.ui.ShippedSuiteType
+import java.math.BigDecimal
 
-    override fun getName(): String {
-        return "ShippedSuiteSdk"
+
+class ShippedSuiteSdkModule(reactContext: ReactApplicationContext) :
+  ReactContextBaseJavaModule(reactContext) {
+
+  override fun getName(): String {
+    return "ShippedSuiteSdk"
+  }
+
+  private val shippedSuite by lazy { ShippedSuite() }
+
+  @ReactMethod
+  fun configure(configuration: ReadableMap) {
+    val publicKey = configuration.getString("publicKey")
+    val mode = configuration.getString("mode")
+
+    if (publicKey != null) {
+      ShippedSuite.configurePublicKey(
+        reactApplicationContext.applicationContext,
+        publicKey
+      )
     }
 
-    // Example method
-    // See https://reactnative.dev/docs/native-modules-android
-    @ReactMethod
-    fun multiply(a: Int, b: Int, promise: Promise) {
-          promise.resolve(a * b)
+    if (mode == "production") {
+      ShippedSuite.setMode(Mode.PRODUCTION)
+    } else {
+      ShippedSuite.setMode(Mode.DEVELOPMENT)
+    }
+  }
+
+  @ReactMethod
+  fun displayLearnMoreModal(type: String) {
+    currentActivity?.let { LearnMoreDialog.show(it, ShippedSuiteType.valueOf(type.uppercase())) }
+  }
+
+  @ReactMethod
+  fun getOffersFee(amount: String, promise: Promise) {
+    val orderValue = BigDecimal.valueOf(amount.trim().toString().toDouble())
+    shippedSuite.getOffersFee(
+      orderValue,
+      object : ShippedSuite.Listener<ShippedOffers> {
+        override fun onSuccess(response: ShippedOffers) {
+          val map = Arguments.createMap()
+          map.putString("storefrontId", response.storefrontId)
+          map.putString("orderValue", response.orderValue.toString())
+          map.putString("shieldFee", response.shieldFee?.toString())
+          map.putString("greenFee", response.greenFee?.toString())
+          map.putString("offeredAt", response.offeredAt.toString())
+          promise.resolve(map)
         }
 
-    }
+        override fun onFailed(exception: ShippedException) {
+          promise.reject(exception.message)
+        }
+      }
+    )
+  }
+
+}

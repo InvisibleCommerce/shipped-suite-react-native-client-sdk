@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import {
   NativeSyntheticEvent,
+  SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
@@ -12,8 +13,15 @@ import {
 import {
   ShippedSuite,
   ShippedSuiteType,
+  WidgetChangeEventData,
   WidgetView
 } from 'react-native-shipped-suite-sdk';
+
+ShippedSuite.configure({
+  publicKey:
+    'pk_development_117c2ee46c122fb0ce070fbc984e6a4742040f05a1c73f8a900254a1933a0112',
+  mode: 'development',
+});
 
 export default function App() {
   const [amount, setAmount] = React.useState('129.99');
@@ -21,81 +29,78 @@ export default function App() {
   const onSubmitEditing = (
     event: NativeSyntheticEvent<TextInputSubmitEditingEventData>
   ) => {
-    console.log('On change:', event.nativeEvent.text);
     setAmount(event.nativeEvent.text);
   };
 
-  const widgetRef = React.useRef<any>(null);
+  const onWidgetChange = (
+    event: NativeSyntheticEvent<WidgetChangeEventData>
+  ) => {
+    console.log(event.nativeEvent);
+  };
 
-  React.useEffect(() => {
-    ShippedSuite.configure({
-      publicKey:
-        'pk_development_117c2ee46c122fb0ce070fbc984e6a4742040f05a1c73f8a900254a1933a0112',
-      mode: 'development',
-    });
-  }, []);
+  const displayLearnMoreModal = () => {
+    ShippedSuite.displayLearnMoreModal('green_and_shield');
+  };
+
+  const getOffersFee = () => {
+    ShippedSuite.getOffersFee(amount)
+      .then((results: any) => console.log('Get offers fee:', results))
+      .catch((error: any) => console.log('Failed to get offers fee:', error));
+  };
+
+  const widgetRef = React.useRef<any>(null);
 
   React.useEffect(() => {
     widgetRef.current?.updateOrderValue(amount);
   }, [amount]);
 
   return (
-    <View style={styles.container}>
-      {/* Input Order Value */}
-      <View style={styles.row}>
-        <Text style={styles.title}>Order Value:</Text>
-        <TextInput
-          style={styles.input}
-          defaultValue={amount}
-          onSubmitEditing={onSubmitEditing}
+    <SafeAreaView>
+      <View>
+        {/* Input Order Value */}
+        <View style={styles.orderValue}>
+          <Text style={styles.title}>Order Value:</Text>
+          <TextInput
+            style={styles.input}
+            defaultValue={amount}
+            onSubmitEditing={onSubmitEditing}
+          />
+        </View>
+
+        {/* Widget View */}
+        <WidgetView
+          ref={widgetRef}
+          style={styles.widget}
+          type={ShippedSuiteType.Shield}
+          isRespectServer={true}
+          onChange={onWidgetChange}
         />
+
+        {/* Display Learn More Modal */}
+        <TouchableHighlight
+          style={styles.buttonContainer}
+          onPress={displayLearnMoreModal}
+        >
+          <Text style={styles.button}>Display Learn More Modal</Text>
+        </TouchableHighlight>
+
+        {/* Get Offers Fee */}
+        <TouchableHighlight
+          style={styles.buttonContainer}
+          onPress={getOffersFee}
+        >
+          <Text style={styles.button}>Send Offers Fee Request</Text>
+        </TouchableHighlight>
       </View>
-
-      {/* Widget View */}
-      <WidgetView
-        ref={widgetRef}
-        style={styles.widget}
-        type={ShippedSuiteType.Green}
-        isRespectServer={true}
-        onChange={(event) => {
-          console.log('Widget on change:', event.nativeEvent);
-        }}
-      />
-
-      {/* Display Learn More Modal */}
-      <TouchableHighlight
-        style={styles.buttonContainer}
-        onPress={() => ShippedSuite.displayLearnMoreModal('shield')}
-      >
-        <Text style={styles.button}>Display Learn More Modal</Text>
-      </TouchableHighlight>
-
-      {/* Get Offers Fee */}
-      <TouchableHighlight
-        style={styles.buttonContainer}
-        onPress={() =>
-          ShippedSuite.getOffersFee(amount)
-            .then((results: any) => console.log('Get offers fee:', results))
-            .catch((error: any) =>
-              console.log('Failed to get offers fee:', error)
-            )
-        }
-      >
-        <Text style={styles.button}>Send Offers Fee Request</Text>
-      </TouchableHighlight>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 104,
-  },
-  row: {
+  orderValue: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 16,
+    margin: 16,
   },
   title: {
     fontStyle: 'normal',
@@ -107,24 +112,23 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 16,
     paddingHorizontal: 8,
-    height: 34,
     borderRadius: 6,
     borderColor: '#EEEEEE',
     borderWidth: 1,
+    minHeight: 40,
   },
   widget: {
     marginHorizontal: 16,
-    marginTop: 16,
-    minHeight: 31,
+    minHeight: 40,
   },
   buttonContainer: {
     marginTop: 16,
     borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
     height: 50,
     marginHorizontal: 16,
     backgroundColor: '#FFC933',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   button: {
     fontStyle: 'normal',

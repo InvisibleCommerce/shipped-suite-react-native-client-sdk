@@ -133,6 +133,8 @@ dependencies {
     //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation 'com.invisiblecommerce:shippedsuite:0.1.0'
+  implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 // From node_modules
 }
 
