@@ -1,15 +1,15 @@
 import React, {
-  forwardRef,
-  ForwardRefRenderFunction,
-  useImperativeHandle,
-  useRef
+    forwardRef,
+    ForwardRefRenderFunction,
+    useImperativeHandle,
+    useRef
 } from 'react';
 import {
-  findNodeHandle,
-  requireNativeComponent,
-  StyleProp,
-  UIManager,
-  ViewStyle
+    findNodeHandle,
+    requireNativeComponent,
+    StyleProp,
+    UIManager,
+    ViewStyle
 } from 'react-native';
 
 export enum ShippedSuiteType {
@@ -30,7 +30,14 @@ export type WidgetViewMethods = {
   updateOrderValue: (amount: string) => void;
 };
 
-const WidgetViewIOS = requireNativeComponent<WidgetViewProps>('RNWidgetView');
+export interface WidgetChangeEventData {
+  isSelected: boolean;
+  shieldFee?: string;
+  greenFee?: string;
+  error?: string;
+}
+
+const RNWidgetView = requireNativeComponent<WidgetViewProps>('RNWidgetView');
 
 const _WidgetView: ForwardRefRenderFunction<
   WidgetViewMethods,
@@ -56,7 +63,7 @@ const _WidgetView: ForwardRefRenderFunction<
   );
 
   return (
-    <WidgetViewIOS
+    <RNWidgetView
       ref={widgetRef}
       type={type}
       isRespectServer={isRespectServer}

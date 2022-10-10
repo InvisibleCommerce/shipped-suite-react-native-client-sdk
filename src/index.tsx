@@ -29,4 +29,4 @@ export function getOffersFee(amount: string): Promise<{ string: any }> {
   return ShippedSuite.getOffersFee(amount);
 }
 
-export { ShippedSuiteType, WidgetView, WidgetViewProps, WidgetViewMethods, WidgetChangeEventData } from './WidgetViewAndroid';
+export { ShippedSuiteType, WidgetView, WidgetViewProps, WidgetViewMethods, WidgetChangeEventData } from './WidgetView';

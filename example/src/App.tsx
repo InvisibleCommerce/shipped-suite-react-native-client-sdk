@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import {
   NativeSyntheticEvent,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -119,7 +120,7 @@ const styles = StyleSheet.create({
   },
   widget: {
     marginHorizontal: 16,
-    minHeight: 40,
+    minHeight: Platform.OS === 'ios' ? 32 : 35,
   },
   buttonContainer: {
     marginTop: 16,
