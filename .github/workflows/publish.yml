@@ -15,12 +15,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Release
-        uses: codfish/semantic-release-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - uses: actions/setup-node@v3
         with:
           node-version: '16.x'
