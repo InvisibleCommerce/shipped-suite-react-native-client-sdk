@@ -9,7 +9,7 @@ on:
 jobs:
   publish:
     name: Publish
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout repository
@@ -30,12 +30,11 @@ jobs:
           TAG: ${{ github.event.inputs.versionName }}
 
       - name: Create Release on GitHub
-        id: create_release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.event.inputs.versionName }}
-          release_name: v${{ github.event.inputs.versionName }}
+          name: v${{ github.event.inputs.versionName }}
           draft: false
           prerelease: false
