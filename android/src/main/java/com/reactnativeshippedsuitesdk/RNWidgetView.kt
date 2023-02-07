@@ -35,6 +35,10 @@ class RNWidgetView(context: ThemedReactContext) : FrameLayout(context) {
     widgetView.type = type
   }
 
+  fun setIsMandatory(isMandatory: Boolean) {
+    widgetView.isMandatory = isMandatory
+  }
+
   fun setIsRespectServer(isRespectServer: Boolean) {
     widgetView.isRespectServer = isRespectServer
   }

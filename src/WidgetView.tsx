@@ -21,6 +21,7 @@ export enum ShippedSuiteType {
 export interface WidgetViewProps {
   style?: StyleProp<ViewStyle>;
   ref?: any;
+  isMandatory?: boolean;
   isRespectServer?: boolean;
   type?: ShippedSuiteType;
   onChange: (values: any) => void;
@@ -43,7 +44,7 @@ const _WidgetView: ForwardRefRenderFunction<
   WidgetViewMethods,
   WidgetViewProps
 > = (props, ref) => {
-  const { type, isRespectServer, onChange, ...others } = props;
+  const { type, isMandatory, isRespectServer, onChange, ...others } = props;
   const widgetRef = useRef<any>(null);
 
   const updateOrderValue = (amount: string) => {
@@ -66,6 +67,7 @@ const _WidgetView: ForwardRefRenderFunction<
     <RNWidgetView
       ref={widgetRef}
       type={type}
+      isMandatory={isMandatory}
       isRespectServer={isRespectServer}
       onChange={onChange}
       {...others}

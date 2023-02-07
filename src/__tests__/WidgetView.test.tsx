@@ -13,6 +13,7 @@
      const component = renderer.create(
         <WidgetView
         type={ShippedSuiteType.GreenAndShield}
+        isMandatory={true}
         isRespectServer={true}
         onChange={() => {}}
       />

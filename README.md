@@ -69,6 +69,7 @@ import {
   ref={widgetRef}
   style={styles.widget}
   type={ShippedSuiteType.GreenAndShield}
+  isMandatory={true}
   isRespectServer={true}
   onChange={onWidgetChange}
 />
