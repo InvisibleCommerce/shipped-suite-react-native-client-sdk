@@ -15,6 +15,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Setup .npmrc file to publish to npm https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+
       - run: yarn
       - run: yarn publish
         env:
