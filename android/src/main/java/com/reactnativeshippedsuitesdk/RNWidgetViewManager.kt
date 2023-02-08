@@ -23,6 +23,11 @@ class RNWidgetViewManager : SimpleViewManager<RNWidgetView>() {
     }
   }
 
+  @ReactProp(name = "isMandatory")
+  fun setIsMandatory(view: RNWidgetView, isMandatory: Boolean) {
+    view.setIsMandatory(isMandatory)
+  }
+
   @ReactProp(name = "isRespectServer")
   fun setIsRespectServer(view: RNWidgetView, isRespectServer: Boolean) {
     view.setIsRespectServer(isRespectServer)

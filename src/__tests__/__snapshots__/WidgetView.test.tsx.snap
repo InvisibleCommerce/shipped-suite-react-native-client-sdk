@@ -2,6 +2,7 @@
 
 exports[`renders a WidgetView using Snapshots 1`] = `
 <RNWidgetView
+  isMandatory={true}
   isRespectServer={true}
   onChange={[Function]}
   type={2}
