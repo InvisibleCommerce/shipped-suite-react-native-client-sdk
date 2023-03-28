@@ -43,7 +43,7 @@
   },
   "homepage": "https://github.com/InvisibleCommerce/shipped-suite-react-native-client-sdk#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "@InvisibleCommerce:registry": "https://npm.pkg.github.com"
   },
   "devDependencies": {
     "@arkweid/lefthook": "^0.7.7",
