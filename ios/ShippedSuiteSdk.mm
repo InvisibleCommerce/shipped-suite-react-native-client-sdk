@@ -34,10 +34,23 @@ RCT_EXPORT_METHOD(configure:(NSDictionary *)configuration)
     }
 }
 
-RCT_EXPORT_METHOD(displayLearnMoreModal:(NSInteger)type)
+RCT_EXPORT_METHOD(displayLearnMoreModal:(NSDictionary *)configuration)
 {
+    NSNumber *type = configuration[@"type"];
+    NSNumber *isInformational = configuration[@"isInformational"];
+    NSNumber *isMandatory = configuration[@"isMandatory"];
+    NSNumber *isRespectServer = configuration[@"isRespectServer"];
+    NSString *currency = configuration[@"currency"];
+
+    ShippedSuiteConfiguration *_configuration = [ShippedSuiteConfiguration new];
+    _configuration.type = type ? ShippedSuiteType(type.unsignedIntegerValue) : ShippedSuiteTypeShield;
+    _configuration.isInformational = isInformational ? [isInformational boolValue] : NO;
+    _configuration.isMandatory = isMandatory ? [isMandatory boolValue] : NO;
+    _configuration.isRespectServer = isRespectServer ? [isRespectServer boolValue] : NO;
+    _configuration.currency = currency;
+
     dispatch_async(dispatch_get_main_queue(), ^{
-        SSLearnMoreViewController *controller = [[SSLearnMoreViewController alloc] initWithType:ShippedSuiteType(type)];
+        SSLearnMoreViewController *controller = [[SSLearnMoreViewController alloc] initWithConfiguration:_configuration];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
         if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             nav.modalPresentationStyle = UIModalPresentationFormSheet;

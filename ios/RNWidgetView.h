@@ -7,10 +7,13 @@
 //
 
 #import <React/RCTViewManager.h>
-#import <ShippedSuite/ShippedSuite.h>
 
-@interface RNWidgetView : SSWidgetView
+@interface RNWidgetView : UIView
+
+@property (nonatomic) NSDictionary *configuration;
 
 @property (nonatomic, copy) RCTBubblingEventBlock onChange;
+
+- (void)updateOrderValue:(NSString *)amount;
 
 @end

@@ -11,7 +11,7 @@
 #import <React/RCTConvert.h>
 #import "RNWidgetView.h"
 
-@interface RNWidgetViewManager () <SSWidgetViewDelegate>
+@interface RNWidgetViewManager ()
 
 @property (nonatomic, strong) RNWidgetView *widgetView;
 
@@ -21,44 +21,17 @@
 
 RCT_EXPORT_MODULE(RNWidgetView)
 
-RCT_EXPORT_VIEW_PROPERTY(type, NSInteger)
-RCT_EXPORT_VIEW_PROPERTY(isMandatory, BOOL)
-RCT_EXPORT_VIEW_PROPERTY(isRespectServer, BOOL)
+RCT_EXPORT_VIEW_PROPERTY(configuration, NSDictionary);
 RCT_EXPORT_VIEW_PROPERTY(onChange, RCTBubblingEventBlock)
 
 RCT_EXPORT_METHOD(updateOrderValue: (nonnull NSNumber *)reactTag amount: (nonnull NSString *)amount) {
-    [self.widgetView updateOrderValue:[NSDecimalNumber decimalNumberWithString:amount]];
+    [self.widgetView updateOrderValue:amount];
 }
 
 - (UIView *)view
 {
-    self.widgetView = [RNWidgetView new];
-    self.widgetView.delegate = self;
-    return self.widgetView;
-}
-
-#pragma mark - SSWidgetViewDelegate
-
-- (void)widgetView:(SSWidgetView *)widgetView onChange:(NSDictionary *)values
-{
-    NSMutableDictionary *results = [NSMutableDictionary dictionary];
-    NSNumber *isSelected = values[SSWidgetViewIsSelectedKey];
-    if (isSelected) {
-        results[SSWidgetViewIsSelectedKey] = isSelected;
-    }
-    NSDecimalNumber *shieldFee = values[SSWidgetViewShieldFeeKey];
-    if (shieldFee) {
-        results[SSWidgetViewShieldFeeKey] = [shieldFee stringValue];
-    }
-    NSDecimalNumber *greenFee = values[SSWidgetViewGreenFeeKey];
-    if (greenFee) {
-        results[SSWidgetViewGreenFeeKey] = [greenFee stringValue];
-    }
-    NSError *error = values[SSWidgetViewErrorKey];
-    if (error) {
-        results[SSWidgetViewErrorKey] = [error localizedDescription];
-    }
-    self.widgetView.onChange(results);
+    _widgetView = [RNWidgetView new];
+    return _widgetView;
 }
 
 @end

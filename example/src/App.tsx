@@ -40,11 +40,14 @@ export default function App() {
   };
 
   const displayLearnMoreModal = () => {
-    ShippedSuite.displayLearnMoreModal(ShippedSuiteType.GreenAndShield);
+    ShippedSuite.displayLearnMoreModal({
+      type: ShippedSuiteType.GreenAndShield,
+      isInformational: true
+    });
   };
 
   const getOffersFee = () => {
-    ShippedSuite.getOffersFee(amount)
+    ShippedSuite.getOffersFee(amount, "MAD")
       .then((results: any) => console.log('Get offers fee:', results))
       .catch((error: any) => console.log('Failed to get offers fee:', error));
   };
@@ -72,9 +75,13 @@ export default function App() {
         <WidgetView
           ref={widgetRef}
           style={styles.widget}
-          type={ShippedSuiteType.GreenAndShield}
-          isMandatory={true}
-          isRespectServer={true}
+          configuration={{
+            type: ShippedSuiteType.Shield,
+            isInformational: true,
+            isMandatory: false,
+            isRespectServer: true,
+            currency: "EUR"
+          }}
           onChange={onWidgetChange}
         />
 
