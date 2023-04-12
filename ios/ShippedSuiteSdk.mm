@@ -64,10 +64,11 @@ RCT_EXPORT_METHOD(displayLearnMoreModal:(NSDictionary *)configuration)
 
 RCT_REMAP_METHOD(getOffersFee,
                  amount:(NSString *)amount
+                 currency:(nullable NSString *)currency
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 {
-    [ShippedSuite getOffersFee:[[NSDecimalNumber alloc] initWithString:amount] completion:^(SSOffers * _Nullable offers, NSError * _Nullable error) {
+    [ShippedSuite getOffersFee:[[NSDecimalNumber alloc] initWithString:amount] currency:currency completion:^(SSOffers * _Nullable offers, NSError * _Nullable error) {
         if (error) {
             NSLog(@"Failed to get offers fee: %@", error.localizedDescription);
             resolve(error.localizedDescription);
