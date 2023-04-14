@@ -100,6 +100,7 @@ class ShippedSuiteSdkModule(reactContext: ReactApplicationContext) :
           map.putString("shieldFee", response.shieldFee?.toString())
           map.putString("greenFee", response.greenFee?.toString())
           map.putString("offeredAt", response.offeredAt.toString())
+          map.putBoolean("mandatory", response.isMandatory)
           promise.resolve(map)
         }
 
