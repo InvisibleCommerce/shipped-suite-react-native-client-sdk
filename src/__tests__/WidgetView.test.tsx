@@ -17,6 +17,7 @@ it('renders a WidgetView using Snapshots', () => {
         isInformational: true,
         isMandatory: true,
         isRespectServer: true,
+        currency: "USD"
       }}
       onChange={() => {}}
     />
