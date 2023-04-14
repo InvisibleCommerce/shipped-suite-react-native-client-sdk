@@ -75,7 +75,7 @@ RCT_REMAP_METHOD(getOffersFee,
             return;
         }
         
-        resolve(@{@"storefrontId": offers.storefrontId ?: [NSNull null], @"orderValue": offers.orderValue.stringValue ?: [NSNull null], @"shieldFee": offers.shieldFee.stringValue ?: [NSNull null], @"greenFee": offers.greenFee.stringValue ?: [NSNull null], @"offeredAt": offers.offeredAt.description ?: [NSNull null]});
+        resolve(@{@"storefrontId": offers.storefrontId ?: [NSNull null], @"mandatory": @(offers.isMandatory), @"orderValue": offers.orderValue.stringValue ?: [NSNull null], @"shieldFee": offers.shieldFee.stringValue ?: [NSNull null], @"greenFee": offers.greenFee.stringValue ?: [NSNull null], @"offeredAt": offers.offeredAt.description ?: [NSNull null]});
     }];
 }
 

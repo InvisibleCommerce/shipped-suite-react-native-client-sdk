@@ -26,8 +26,8 @@ export function displayLearnMoreModal(configuration: ShippedSuiteConfiguration) 
   return ShippedSuite.displayLearnMoreModal(configuration);
 }
 
-export function getOffersFee(amount: string): Promise<{ string: any }> {
-  return ShippedSuite.getOffersFee(amount);
+export function getOffersFee(amount: string, currency = "USD"): Promise<{ string: any }> {
+  return ShippedSuite.getOffersFee(amount, currency);
 }
 
 export { ShippedSuiteType, WidgetView, WidgetViewProps, WidgetViewMethods, WidgetChangeEventData } from './WidgetView';
