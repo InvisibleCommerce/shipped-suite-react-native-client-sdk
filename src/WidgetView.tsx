@@ -18,12 +18,18 @@ export enum ShippedSuiteType {
   GreenAndShield,
 }
 
+export type ShippedSuiteConfiguration = {
+  type?: ShippedSuiteType;
+  isInformational?: boolean;
+  isMandatory?: boolean;
+  isRespectServer?: boolean;
+  currency?: string;
+};
+
 export interface WidgetViewProps {
   style?: StyleProp<ViewStyle>;
   ref?: any;
-  isMandatory?: boolean;
-  isRespectServer?: boolean;
-  type?: ShippedSuiteType;
+  configuration: ShippedSuiteConfiguration;
   onChange: (values: any) => void;
 }
 
@@ -33,8 +39,7 @@ export type WidgetViewMethods = {
 
 export interface WidgetChangeEventData {
   isSelected: boolean;
-  shieldFee?: string;
-  greenFee?: string;
+  totalFee?: string;
   error?: string;
 }
 
@@ -44,7 +49,7 @@ const _WidgetView: ForwardRefRenderFunction<
   WidgetViewMethods,
   WidgetViewProps
 > = (props, ref) => {
-  const { type, isMandatory, isRespectServer, onChange, ...others } = props;
+  const { configuration, onChange, ...others } = props;
   const widgetRef = useRef<any>(null);
 
   const updateOrderValue = (amount: string) => {
@@ -66,9 +71,7 @@ const _WidgetView: ForwardRefRenderFunction<
   return (
     <RNWidgetView
       ref={widgetRef}
-      type={type}
-      isMandatory={isMandatory}
-      isRespectServer={isRespectServer}
+      configuration={configuration}
       onChange={onChange}
       {...others}
     />

@@ -34,10 +34,23 @@ RCT_EXPORT_METHOD(configure:(NSDictionary *)configuration)
     }
 }
 
-RCT_EXPORT_METHOD(displayLearnMoreModal:(NSInteger)type)
+RCT_EXPORT_METHOD(displayLearnMoreModal:(NSDictionary *)configuration)
 {
+    NSNumber *type = configuration[@"type"];
+    NSNumber *isInformational = configuration[@"isInformational"];
+    NSNumber *isMandatory = configuration[@"isMandatory"];
+    NSNumber *isRespectServer = configuration[@"isRespectServer"];
+    NSString *currency = configuration[@"currency"];
+
+    ShippedSuiteConfiguration *_configuration = [ShippedSuiteConfiguration new];
+    _configuration.type = type ? ShippedSuiteType(type.unsignedIntegerValue) : ShippedSuiteTypeShield;
+    _configuration.isInformational = isInformational ? [isInformational boolValue] : NO;
+    _configuration.isMandatory = isMandatory ? [isMandatory boolValue] : NO;
+    _configuration.isRespectServer = isRespectServer ? [isRespectServer boolValue] : NO;
+    _configuration.currency = currency;
+
     dispatch_async(dispatch_get_main_queue(), ^{
-        SSLearnMoreViewController *controller = [[SSLearnMoreViewController alloc] initWithType:ShippedSuiteType(type)];
+        SSLearnMoreViewController *controller = [[SSLearnMoreViewController alloc] initWithConfiguration:_configuration];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:controller];
         if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             nav.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -51,17 +64,18 @@ RCT_EXPORT_METHOD(displayLearnMoreModal:(NSInteger)type)
 
 RCT_REMAP_METHOD(getOffersFee,
                  amount:(NSString *)amount
+                 currency:(nullable NSString *)currency
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 {
-    [ShippedSuite getOffersFee:[[NSDecimalNumber alloc] initWithString:amount] completion:^(SSOffers * _Nullable offers, NSError * _Nullable error) {
+    [ShippedSuite getOffersFee:[[NSDecimalNumber alloc] initWithString:amount] currency:currency completion:^(SSOffers * _Nullable offers, NSError * _Nullable error) {
         if (error) {
             NSLog(@"Failed to get offers fee: %@", error.localizedDescription);
             resolve(error.localizedDescription);
             return;
         }
         
-        resolve(@{@"storefrontId": offers.storefrontId ?: [NSNull null], @"orderValue": offers.orderValue.stringValue ?: [NSNull null], @"shieldFee": offers.shieldFee.stringValue ?: [NSNull null], @"greenFee": offers.greenFee.stringValue ?: [NSNull null], @"offeredAt": offers.offeredAt.description ?: [NSNull null]});
+        resolve(@{@"storefrontId": offers.storefrontId ?: [NSNull null], @"mandatory": @(offers.isMandatory), @"orderValue": offers.orderValue.stringValue ?: [NSNull null], @"shieldFee": offers.shieldFee.stringValue ?: [NSNull null], @"greenFee": offers.greenFee.stringValue ?: [NSNull null], @"offeredAt": offers.offeredAt.description ?: [NSNull null]});
     }];
 }
 

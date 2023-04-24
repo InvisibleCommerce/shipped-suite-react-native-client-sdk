@@ -1,16 +1,13 @@
 package com.reactnativeshippedsuitesdk
 
-import android.util.Log
-import android.view.Choreographer
-import android.view.View
 import android.widget.FrameLayout
-import com.facebook.react.bridge.Arguments
+import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.UIManagerModule
 import com.facebook.react.uimanager.events.EventDispatcher
+import com.invisiblecommerce.shippedsuite.ui.ShippedSuiteConfiguration
 import com.invisiblecommerce.shippedsuite.ui.ShippedSuiteType
 import com.invisiblecommerce.shippedsuite.ui.WidgetView
-import kotlinx.coroutines.NonCancellable.isActive
 import java.math.BigDecimal
 
 
@@ -31,16 +28,47 @@ class RNWidgetView(context: ThemedReactContext) : FrameLayout(context) {
     viewTreeObserver.addOnGlobalLayoutListener { requestLayout() }
   }
 
-  fun setType(type: ShippedSuiteType) {
-    widgetView.type = type
-  }
+  fun setConfiguration(configuration: ReadableMap) {
+    val config = ShippedSuiteConfiguration()
+    if (configuration.hasKey("type")) {
+      val type = configuration.getInt("type")
+      if (type != null) {
+        when (type) {
+          0 -> config.type = ShippedSuiteType.SHIELD
+          1 -> config.type = ShippedSuiteType.GREEN
+          2 -> config.type = ShippedSuiteType.GREEN_AND_SHIELD
+        }
+      }
+    }
 
-  fun setIsMandatory(isMandatory: Boolean) {
-    widgetView.isMandatory = isMandatory
-  }
+    if (configuration.hasKey("isInformational")) {
+      val isInformational = configuration.getBoolean("isInformational")
+      if (isInformational != null) {
+        config.isInformational = isInformational
+      }
+    }
 
-  fun setIsRespectServer(isRespectServer: Boolean) {
-    widgetView.isRespectServer = isRespectServer
+    if (configuration.hasKey("isMandatory")) {
+      val isMandatory = configuration.getBoolean("isMandatory")
+      if (isMandatory != null) {
+        config.isMandatory = isMandatory
+      }
+    }
+
+    if (configuration.hasKey("isRespectServer")) {
+      val isRespectServer = configuration.getBoolean("isRespectServer")
+      if (isRespectServer != null) {
+        config.isRespectServer = isRespectServer
+      }
+    }
+
+    if (configuration.hasKey("currency")) {
+      val currency = configuration.getString("currency")
+      if (currency != null) {
+        config.currency = currency
+      }
+    }
+    widgetView.configuration = config
   }
 
   fun updateOrderValue(amount: BigDecimal) {

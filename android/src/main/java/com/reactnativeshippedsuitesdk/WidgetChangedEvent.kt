@@ -22,11 +22,8 @@ internal class WidgetChangedEvent constructor(
     if (details.containsKey("isSelected")) {
       eventData.putBoolean("isSelected", details["isSelected"] as Boolean)
     }
-    if (details.containsKey("shieldFee")) {
-      eventData.putString("shieldFee", details["shieldFee"]?.toString())
-    }
-    if (details.containsKey("greenFee")) {
-      eventData.putString("greenFee", details["greenFee"]?.toString())
+    if (details.containsKey("totalFee")) {
+      eventData.putString("totalFee", details["totalFee"]?.toString())
     }
     if (details.containsKey("error")) {
       eventData.putString("error", details["error"]?.toString())

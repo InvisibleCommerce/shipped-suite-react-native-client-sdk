@@ -68,9 +68,13 @@ import {
 <WidgetView
   ref={widgetRef}
   style={styles.widget}
-  type={ShippedSuiteType.GreenAndShield}
-  isMandatory={true}
-  isRespectServer={true}
+  configuration={{
+    type: ShippedSuiteType.Green,
+    isInformational: true,
+    isMandatory: false,
+    isRespectServer: false,
+    currency: "USD"
+  }}
   onChange={onWidgetChange}
 />
 ```
@@ -93,7 +97,7 @@ const onWidgetChange = (
 
 Print log:
 ```
-{"isSelected": false, "shieldFee": "2.27"}
+{"isSelected": true, "totalFee": 0.39}
 ```
 
 Within the callback, implement any logic necessary to add or remove Shield or Green from the cart, based on whether `isSelected` is true or false. 
@@ -105,7 +109,7 @@ If you plan to implement the widget yourself to fit the app style, you can still
 - Request the Offers Fee
 
 ```js
-ShippedSuite.getOffersFee(amount)
+ShippedSuite.getOffersFee(amount, currency)
       .then((results: any) => console.log('Get offers fee:', results))
       .catch((error: any) => console.log('Failed to get offers fee:', error));
 ```
@@ -113,7 +117,10 @@ ShippedSuite.getOffersFee(amount)
 - Display learn more modal
 
 ```js
-ShippedSuite.displayLearnMoreModal(ShippedSuiteType.GreenAndShield);
+ShippedSuite.displayLearnMoreModal({
+  type: ShippedSuiteType.Green,
+  isInformational: true
+});
 ```
 
 ## Contributing

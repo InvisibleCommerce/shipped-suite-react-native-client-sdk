@@ -1,4 +1,5 @@
 import { NativeModules, Platform } from 'react-native';
+import type { ShippedSuiteConfiguration } from './WidgetView';
 
 const LINKING_ERROR =
   `The package 'react-native-shipped-suite-sdk' doesn't seem to be linked. Make sure: \n\n` +
@@ -21,12 +22,12 @@ export function configure(serializable: { publicKey: string; mode: string }) {
   return ShippedSuite.configure(serializable);
 }
 
-export function displayLearnMoreModal(type: string) {
-  return ShippedSuite.displayLearnMoreModal(type);
+export function displayLearnMoreModal(configuration: ShippedSuiteConfiguration) {
+  return ShippedSuite.displayLearnMoreModal(configuration);
 }
 
-export function getOffersFee(amount: string): Promise<{ string: any }> {
-  return ShippedSuite.getOffersFee(amount);
+export function getOffersFee(amount: string, currency = "USD"): Promise<{ string: any }> {
+  return ShippedSuite.getOffersFee(amount, currency);
 }
 
 export { ShippedSuiteType, WidgetView, WidgetViewProps, WidgetViewMethods, WidgetChangeEventData } from './WidgetView';
