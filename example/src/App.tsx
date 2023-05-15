@@ -1,21 +1,22 @@
 import * as React from 'react';
 
 import {
+  Appearance,
+  ColorSchemeName,
   NativeSyntheticEvent,
-  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
   TextInputSubmitEditingEventData,
   TouchableHighlight,
-  View
+  View,
 } from 'react-native';
 import {
   ShippedSuite,
   ShippedSuiteType,
   WidgetChangeEventData,
-  WidgetView
+  WidgetView,
 } from 'react-native-shipped-suite-sdk';
 
 ShippedSuite.configure({
@@ -26,6 +27,9 @@ ShippedSuite.configure({
 
 export default function App() {
   const [amount, setAmount] = React.useState('129.99');
+  const [theme, setTheme] = React.useState<ColorSchemeName>(
+    Appearance.getColorScheme()
+  );
 
   const onSubmitEditing = (
     event: NativeSyntheticEvent<TextInputSubmitEditingEventData>
@@ -42,12 +46,12 @@ export default function App() {
   const displayLearnMoreModal = () => {
     ShippedSuite.displayLearnMoreModal({
       type: ShippedSuiteType.GreenAndShield,
-      isInformational: true
+      isInformational: true,
     });
   };
 
   const getOffersFee = () => {
-    ShippedSuite.getOffersFee(amount, "MAD")
+    ShippedSuite.getOffersFee(amount, 'MAD')
       .then((results: any) => console.log('Get offers fee:', results))
       .catch((error: any) => console.log('Failed to get offers fee:', error));
   };
@@ -58,14 +62,26 @@ export default function App() {
     widgetRef.current?.updateOrderValue(amount);
   }, [amount]);
 
+  const themeChangeListener = React.useCallback(() => {
+    console.log(Appearance.getColorScheme());
+    setTheme(Appearance.getColorScheme());
+  }, []);
+
+  React.useEffect(() => {
+    Appearance.addChangeListener(themeChangeListener);
+    return () => Appearance.removeChangeListener(themeChangeListener);
+  }, [themeChangeListener]);
+
   return (
     <SafeAreaView>
       <View>
         {/* Input Order Value */}
         <View style={styles.orderValue}>
-          <Text style={styles.title}>Order Value:</Text>
+          <Text style={theme === 'dark' ? darkStyles.title : styles.title}>
+            Order Value:
+          </Text>
           <TextInput
-            style={styles.input}
+            style={theme === 'dark' ? darkStyles.input : styles.input}
             defaultValue={amount}
             onSubmitEditing={onSubmitEditing}
           />
@@ -77,17 +93,21 @@ export default function App() {
           style={styles.widget}
           configuration={{
             type: ShippedSuiteType.Shield,
-            isInformational: true,
+            isInformational: false,
             isMandatory: false,
             isRespectServer: true,
-            currency: "EUR"
+            currency: 'EUR',
           }}
           onChange={onWidgetChange}
         />
 
         {/* Display Learn More Modal */}
         <TouchableHighlight
-          style={styles.buttonContainer}
+          style={
+            theme === 'dark'
+              ? darkStyles.buttonContainer
+              : styles.buttonContainer
+          }
           onPress={displayLearnMoreModal}
         >
           <Text style={styles.button}>Display Learn More Modal</Text>
@@ -95,7 +115,11 @@ export default function App() {
 
         {/* Get Offers Fee */}
         <TouchableHighlight
-          style={styles.buttonContainer}
+          style={
+            theme === 'dark'
+              ? darkStyles.buttonContainer
+              : styles.buttonContainer
+          }
           onPress={getOffersFee}
         >
           <Text style={styles.button}>Send Offers Fee Request</Text>
@@ -119,6 +143,7 @@ const styles = StyleSheet.create({
     lineHeight: 33.6,
   },
   input: {
+    color: 'black',
     flex: 1,
     marginLeft: 16,
     paddingHorizontal: 8,
@@ -129,7 +154,7 @@ const styles = StyleSheet.create({
   },
   widget: {
     marginHorizontal: 16,
-    height: Platform.OS === 'ios' ? 32 : 35,
+    height: 39,
   },
   buttonContainer: {
     marginTop: 16,
@@ -146,5 +171,34 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 17,
     lineHeight: 33.6,
+  },
+});
+
+const darkStyles = StyleSheet.create({
+  title: {
+    color: 'white',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 17,
+    lineHeight: 33.6,
+  },
+  input: {
+    color: 'white',
+    flex: 1,
+    marginLeft: 16,
+    paddingHorizontal: 8,
+    borderRadius: 6,
+    borderColor: '#EEEEEE',
+    borderWidth: 1,
+    minHeight: 40,
+  },
+  buttonContainer: {
+    marginTop: 16,
+    borderRadius: 10,
+    height: 50,
+    marginHorizontal: 16,
+    backgroundColor: '#FFCF4D',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
