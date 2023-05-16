@@ -5,6 +5,7 @@ import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.UIManagerModule
 import com.facebook.react.uimanager.events.EventDispatcher
+import com.invisiblecommerce.shippedsuite.ui.ShippedSuiteAppearance
 import com.invisiblecommerce.shippedsuite.ui.ShippedSuiteConfiguration
 import com.invisiblecommerce.shippedsuite.ui.ShippedSuiteType
 import com.invisiblecommerce.shippedsuite.ui.WidgetView
@@ -14,7 +15,8 @@ import java.math.BigDecimal
 class RNWidgetView(context: ThemedReactContext) : FrameLayout(context) {
   private lateinit var widgetView: WidgetView
 
-  private var mEventDispatcher: EventDispatcher? = context.getNativeModule(UIManagerModule::class.java)?.eventDispatcher
+  private var mEventDispatcher: EventDispatcher? =
+    context.getNativeModule(UIManagerModule::class.java)?.eventDispatcher
 
   init {
     widgetView = WidgetView(context)
@@ -30,6 +32,7 @@ class RNWidgetView(context: ThemedReactContext) : FrameLayout(context) {
 
   fun setConfiguration(configuration: ReadableMap) {
     val config = ShippedSuiteConfiguration()
+
     if (configuration.hasKey("type")) {
       val type = configuration.getInt("type")
       if (type != null) {
@@ -68,6 +71,18 @@ class RNWidgetView(context: ThemedReactContext) : FrameLayout(context) {
         config.currency = currency
       }
     }
+
+    if (configuration.hasKey("appearance")) {
+      val appearance = configuration.getInt("appearance")
+      if (appearance != null) {
+        when (appearance) {
+          0 -> config.appearance = ShippedSuiteAppearance.AUTO
+          1 -> config.appearance = ShippedSuiteAppearance.LIGHT
+          2 -> config.appearance = ShippedSuiteAppearance.DARK
+        }
+      }
+    }
+
     widgetView.configuration = config
   }
 
@@ -83,7 +98,8 @@ class RNWidgetView(context: ThemedReactContext) : FrameLayout(context) {
   private val mLayoutRunnable = Runnable {
     measure(
       MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
-      MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY))
+      MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
+    )
     layout(left, top, right, bottom)
   }
 }

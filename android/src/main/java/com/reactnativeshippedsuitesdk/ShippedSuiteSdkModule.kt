@@ -6,6 +6,7 @@ import com.invisiblecommerce.shippedsuite.ShippedSuite
 import com.invisiblecommerce.shippedsuite.exception.ShippedException
 import com.invisiblecommerce.shippedsuite.model.ShippedOffers
 import com.invisiblecommerce.shippedsuite.ui.LearnMoreDialog
+import com.invisiblecommerce.shippedsuite.ui.ShippedSuiteAppearance
 import com.invisiblecommerce.shippedsuite.ui.ShippedSuiteConfiguration
 import com.invisiblecommerce.shippedsuite.ui.ShippedSuiteType
 import java.math.BigDecimal
@@ -79,6 +80,17 @@ class ShippedSuiteSdkModule(reactContext: ReactApplicationContext) :
         val currency = configuration.getString("currency")
         if (currency != null) {
           config.currency = currency
+        }
+      }
+
+      if (configuration.hasKey("appearance")) {
+        val appearance = configuration.getInt("appearance")
+        if (appearance != null) {
+          when (appearance) {
+            0 -> config.appearance = ShippedSuiteAppearance.AUTO
+            1 -> config.appearance = ShippedSuiteAppearance.LIGHT
+            2 -> config.appearance = ShippedSuiteAppearance.DARK
+          }
         }
       }
 
