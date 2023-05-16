@@ -48,6 +48,10 @@
         _configuration.isRespectServer = isRespectServer.boolValue;
     }
     _configuration.currency = configuration[@"currency"];
+    NSNumber *appearance = configuration[@"appearance"];
+    if (appearance) {
+        _configuration.appearance = appearance.unsignedIntegerValue;
+    }
     self.widgetView.configuration = _configuration;
 }
 

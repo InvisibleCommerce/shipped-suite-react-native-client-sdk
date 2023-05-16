@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import {
   ShippedSuite,
+  ShippedSuiteAppearance,
   ShippedSuiteType,
   WidgetChangeEventData,
   WidgetView,
@@ -47,6 +48,7 @@ export default function App() {
     ShippedSuite.displayLearnMoreModal({
       type: ShippedSuiteType.GreenAndShield,
       isInformational: true,
+      appearance: ShippedSuiteAppearance.Auto,
     });
   };
 
@@ -73,58 +75,55 @@ export default function App() {
   }, [themeChangeListener]);
 
   return (
-    <SafeAreaView>
-      <View>
-        {/* Input Order Value */}
-        <View style={styles.orderValue}>
-          <Text style={theme === 'dark' ? darkStyles.title : styles.title}>
-            Order Value:
-          </Text>
-          <TextInput
-            style={theme === 'dark' ? darkStyles.input : styles.input}
-            defaultValue={amount}
-            onSubmitEditing={onSubmitEditing}
-          />
-        </View>
-
-        {/* Widget View */}
-        <WidgetView
-          ref={widgetRef}
-          style={styles.widget}
-          configuration={{
-            type: ShippedSuiteType.Shield,
-            isInformational: false,
-            isMandatory: false,
-            isRespectServer: true,
-            currency: 'EUR',
-          }}
-          onChange={onWidgetChange}
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: theme === 'dark' ? 'black' : 'white' }}
+    >
+      {/* Input Order Value */}
+      <View style={styles.orderValue}>
+        <Text style={theme === 'dark' ? darkStyles.title : styles.title}>
+          Order Value:
+        </Text>
+        <TextInput
+          style={theme === 'dark' ? darkStyles.input : styles.input}
+          defaultValue={amount}
+          onSubmitEditing={onSubmitEditing}
         />
-
-        {/* Display Learn More Modal */}
-        <TouchableHighlight
-          style={
-            theme === 'dark'
-              ? darkStyles.buttonContainer
-              : styles.buttonContainer
-          }
-          onPress={displayLearnMoreModal}
-        >
-          <Text style={styles.button}>Display Learn More Modal</Text>
-        </TouchableHighlight>
-
-        {/* Get Offers Fee */}
-        <TouchableHighlight
-          style={
-            theme === 'dark'
-              ? darkStyles.buttonContainer
-              : styles.buttonContainer
-          }
-          onPress={getOffersFee}
-        >
-          <Text style={styles.button}>Send Offers Fee Request</Text>
-        </TouchableHighlight>
       </View>
+
+      {/* Widget View */}
+      <WidgetView
+        ref={widgetRef}
+        style={styles.widget}
+        configuration={{
+          type: ShippedSuiteType.Shield,
+          isInformational: false,
+          isMandatory: false,
+          isRespectServer: true,
+          currency: 'EUR',
+          appearance: ShippedSuiteAppearance.Auto,
+        }}
+        onChange={onWidgetChange}
+      />
+
+      {/* Display Learn More Modal */}
+      <TouchableHighlight
+        style={
+          theme === 'dark' ? darkStyles.buttonContainer : styles.buttonContainer
+        }
+        onPress={displayLearnMoreModal}
+      >
+        <Text style={styles.button}>Display Learn More Modal</Text>
+      </TouchableHighlight>
+
+      {/* Get Offers Fee */}
+      <TouchableHighlight
+        style={
+          theme === 'dark' ? darkStyles.buttonContainer : styles.buttonContainer
+        }
+        onPress={getOffersFee}
+      >
+        <Text style={styles.button}>Send Offers Fee Request</Text>
+      </TouchableHighlight>
     </SafeAreaView>
   );
 }

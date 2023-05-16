@@ -1,15 +1,15 @@
 import React, {
-    forwardRef,
-    ForwardRefRenderFunction,
-    useImperativeHandle,
-    useRef
+  forwardRef,
+  ForwardRefRenderFunction,
+  useImperativeHandle,
+  useRef,
 } from 'react';
 import {
-    findNodeHandle,
-    requireNativeComponent,
-    StyleProp,
-    UIManager,
-    ViewStyle
+  findNodeHandle,
+  requireNativeComponent,
+  StyleProp,
+  UIManager,
+  ViewStyle,
 } from 'react-native';
 
 export enum ShippedSuiteType {
@@ -18,12 +18,19 @@ export enum ShippedSuiteType {
   GreenAndShield,
 }
 
+export enum ShippedSuiteAppearance {
+  Auto,
+  Light,
+  Dark,
+}
+
 export type ShippedSuiteConfiguration = {
   type?: ShippedSuiteType;
   isInformational?: boolean;
   isMandatory?: boolean;
   isRespectServer?: boolean;
   currency?: string;
+  appearance?: ShippedSuiteAppearance;
 };
 
 export interface WidgetViewProps {

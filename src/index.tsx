@@ -30,4 +30,4 @@ export function getOffersFee(amount: string, currency = "USD"): Promise<{ string
   return ShippedSuite.getOffersFee(amount, currency);
 }
 
-export { ShippedSuiteType, WidgetView, WidgetViewProps, WidgetViewMethods, WidgetChangeEventData } from './WidgetView';
+export { ShippedSuiteType, ShippedSuiteAppearance, WidgetView, WidgetViewProps, WidgetViewMethods, WidgetChangeEventData } from './WidgetView';
