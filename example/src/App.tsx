@@ -3,6 +3,7 @@ import * as React from 'react';
 import {
   Appearance,
   ColorSchemeName,
+  LogBox,
   NativeSyntheticEvent,
   SafeAreaView,
   StyleSheet,
@@ -25,6 +26,8 @@ ShippedSuite.configure({
     'pk_development_117c2ee46c122fb0ce070fbc984e6a4742040f05a1c73f8a900254a1933a0112',
   mode: 'development',
 });
+
+LogBox.ignoreLogs(['EventEmitter.removeListener']);
 
 export default function App() {
   const [amount, setAmount] = React.useState('129.99');
@@ -65,7 +68,6 @@ export default function App() {
   }, [amount]);
 
   const themeChangeListener = React.useCallback(() => {
-    console.log(Appearance.getColorScheme());
     setTheme(Appearance.getColorScheme());
   }, []);
 
@@ -74,17 +76,21 @@ export default function App() {
     return () => Appearance.removeChangeListener(themeChangeListener);
   }, [themeChangeListener]);
 
+  const isDarkTheme = () => {
+    return theme === 'dark';
+  };
+
   return (
     <SafeAreaView
-      style={{ flex: 1, backgroundColor: theme === 'dark' ? 'black' : 'white' }}
+      style={{ flex: 1, backgroundColor: isDarkTheme() ? 'black' : 'white' }}
     >
       {/* Input Order Value */}
       <View style={styles.orderValue}>
-        <Text style={theme === 'dark' ? darkStyles.title : styles.title}>
+        <Text style={isDarkTheme() ? darkStyles.title : styles.title}>
           Order Value:
         </Text>
         <TextInput
-          style={theme === 'dark' ? darkStyles.input : styles.input}
+          style={isDarkTheme() ? darkStyles.input : styles.input}
           defaultValue={amount}
           onSubmitEditing={onSubmitEditing}
         />
@@ -108,7 +114,7 @@ export default function App() {
       {/* Display Learn More Modal */}
       <TouchableHighlight
         style={
-          theme === 'dark' ? darkStyles.buttonContainer : styles.buttonContainer
+          isDarkTheme() ? darkStyles.buttonContainer : styles.buttonContainer
         }
         onPress={displayLearnMoreModal}
       >
@@ -118,7 +124,7 @@ export default function App() {
       {/* Get Offers Fee */}
       <TouchableHighlight
         style={
-          theme === 'dark' ? darkStyles.buttonContainer : styles.buttonContainer
+          isDarkTheme() ? darkStyles.buttonContainer : styles.buttonContainer
         }
         onPress={getOffersFee}
       >
