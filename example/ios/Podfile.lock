@@ -300,7 +300,7 @@ PODS:
   - React-jsinspector (0.68.4)
   - React-logger (0.68.4):
     - glog
-  - react-native-shipped-suite-sdk (1.0.0):
+  - react-native-shipped-suite-sdk (1.0.1):
     - React-Core
     - ShippedSuite (= 1.0.1)
   - React-perflogger (0.68.4)
@@ -557,7 +557,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 4f35a29798ba9d0d892a84001d11f626688dbb8e
   React-jsinspector: 6f75220cd4b6020976d340ab21c63458dd3cad9e
   React-logger: 7013d2499df6346e6a72802d4084badaaa82543b
-  react-native-shipped-suite-sdk: 181cd92a1c7f77833e4e66981ad91ed5b5820056
+  react-native-shipped-suite-sdk: 3721faa1a9a04e3543cc5bc064d406b0692a1271
   React-perflogger: 0b0500685176e53ea582c45179a653aa82e4ae49
   React-RCTActionSheet: 38469be9d20242f9c717e43c2983e8e3e6c640c4
   React-RCTAnimation: 93774f3e8857e7c3c1cbbd277056d02be4496be1
