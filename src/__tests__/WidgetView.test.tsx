@@ -2,12 +2,16 @@
  * @format
  */
 
-import 'react-native';
 import React from 'react';
+import 'react-native';
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
-import { ShippedSuiteType, WidgetView } from '../WidgetView';
+import {
+  ShippedSuiteAppearance,
+  ShippedSuiteType,
+  WidgetView,
+} from '../WidgetView';
 
 it('renders a WidgetView using Snapshots', () => {
   const component = renderer.create(
@@ -17,7 +21,8 @@ it('renders a WidgetView using Snapshots', () => {
         isInformational: true,
         isMandatory: true,
         isRespectServer: true,
-        currency: "USD"
+        currency: 'USD',
+        appearance: ShippedSuiteAppearance.Auto,
       }}
       onChange={() => {}}
     />
