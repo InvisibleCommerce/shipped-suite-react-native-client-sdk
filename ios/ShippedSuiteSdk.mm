@@ -41,6 +41,7 @@ RCT_EXPORT_METHOD(displayLearnMoreModal:(NSDictionary *)configuration)
     NSNumber *isMandatory = configuration[@"isMandatory"];
     NSNumber *isRespectServer = configuration[@"isRespectServer"];
     NSString *currency = configuration[@"currency"];
+    NSNumber *appearance = configuration[@"appearance"];
 
     ShippedSuiteConfiguration *_configuration = [ShippedSuiteConfiguration new];
     _configuration.type = type ? ShippedSuiteType(type.unsignedIntegerValue) : ShippedSuiteTypeShield;
@@ -48,6 +49,7 @@ RCT_EXPORT_METHOD(displayLearnMoreModal:(NSDictionary *)configuration)
     _configuration.isMandatory = isMandatory ? [isMandatory boolValue] : NO;
     _configuration.isRespectServer = isRespectServer ? [isRespectServer boolValue] : NO;
     _configuration.currency = currency;
+    _configuration.appearance = appearance ? ShippedSuiteAppearance(appearance.unsignedIntegerValue) : ShippedSuiteAppearanceAuto;
 
     dispatch_async(dispatch_get_main_queue(), ^{
         SSLearnMoreViewController *controller = [[SSLearnMoreViewController alloc] initWithConfiguration:_configuration];

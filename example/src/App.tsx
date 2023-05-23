@@ -1,21 +1,24 @@
 import * as React from 'react';
 
 import {
+  Appearance,
+  ColorSchemeName,
+  LogBox,
   NativeSyntheticEvent,
-  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
   TextInputSubmitEditingEventData,
   TouchableHighlight,
-  View
+  View,
 } from 'react-native';
 import {
   ShippedSuite,
+  ShippedSuiteAppearance,
   ShippedSuiteType,
   WidgetChangeEventData,
-  WidgetView
+  WidgetView,
 } from 'react-native-shipped-suite-sdk';
 
 ShippedSuite.configure({
@@ -24,8 +27,13 @@ ShippedSuite.configure({
   mode: 'development',
 });
 
+LogBox.ignoreLogs(['EventEmitter.removeListener']);
+
 export default function App() {
   const [amount, setAmount] = React.useState('129.99');
+  const [theme, setTheme] = React.useState<ColorSchemeName>(
+    Appearance.getColorScheme()
+  );
 
   const onSubmitEditing = (
     event: NativeSyntheticEvent<TextInputSubmitEditingEventData>
@@ -42,12 +50,13 @@ export default function App() {
   const displayLearnMoreModal = () => {
     ShippedSuite.displayLearnMoreModal({
       type: ShippedSuiteType.GreenAndShield,
-      isInformational: true
+      isInformational: true,
+      appearance: ShippedSuiteAppearance.Auto,
     });
   };
 
   const getOffersFee = () => {
-    ShippedSuite.getOffersFee(amount, "MAD")
+    ShippedSuite.getOffersFee(amount, 'MAD')
       .then((results: any) => console.log('Get offers fee:', results))
       .catch((error: any) => console.log('Failed to get offers fee:', error));
   };
@@ -58,49 +67,69 @@ export default function App() {
     widgetRef.current?.updateOrderValue(amount);
   }, [amount]);
 
+  const themeChangeListener = React.useCallback(() => {
+    setTheme(Appearance.getColorScheme());
+  }, []);
+
+  React.useEffect(() => {
+    Appearance.addChangeListener(themeChangeListener);
+    return () => Appearance.removeChangeListener(themeChangeListener);
+  }, [themeChangeListener]);
+
+  const isDarkTheme = () => {
+    return theme === 'dark';
+  };
+
   return (
-    <SafeAreaView>
-      <View>
-        {/* Input Order Value */}
-        <View style={styles.orderValue}>
-          <Text style={styles.title}>Order Value:</Text>
-          <TextInput
-            style={styles.input}
-            defaultValue={amount}
-            onSubmitEditing={onSubmitEditing}
-          />
-        </View>
-
-        {/* Widget View */}
-        <WidgetView
-          ref={widgetRef}
-          style={styles.widget}
-          configuration={{
-            type: ShippedSuiteType.Shield,
-            isInformational: true,
-            isMandatory: false,
-            isRespectServer: true,
-            currency: "EUR"
-          }}
-          onChange={onWidgetChange}
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: isDarkTheme() ? 'black' : 'white' }}
+    >
+      {/* Input Order Value */}
+      <View style={styles.orderValue}>
+        <Text style={isDarkTheme() ? darkStyles.title : styles.title}>
+          Order Value:
+        </Text>
+        <TextInput
+          style={isDarkTheme() ? darkStyles.input : styles.input}
+          defaultValue={amount}
+          onSubmitEditing={onSubmitEditing}
         />
-
-        {/* Display Learn More Modal */}
-        <TouchableHighlight
-          style={styles.buttonContainer}
-          onPress={displayLearnMoreModal}
-        >
-          <Text style={styles.button}>Display Learn More Modal</Text>
-        </TouchableHighlight>
-
-        {/* Get Offers Fee */}
-        <TouchableHighlight
-          style={styles.buttonContainer}
-          onPress={getOffersFee}
-        >
-          <Text style={styles.button}>Send Offers Fee Request</Text>
-        </TouchableHighlight>
       </View>
+
+      {/* Widget View */}
+      <WidgetView
+        ref={widgetRef}
+        style={styles.widget}
+        configuration={{
+          type: ShippedSuiteType.Shield,
+          isInformational: false,
+          isMandatory: false,
+          isRespectServer: true,
+          currency: 'EUR',
+          appearance: ShippedSuiteAppearance.Auto,
+        }}
+        onChange={onWidgetChange}
+      />
+
+      {/* Display Learn More Modal */}
+      <TouchableHighlight
+        style={
+          isDarkTheme() ? darkStyles.buttonContainer : styles.buttonContainer
+        }
+        onPress={displayLearnMoreModal}
+      >
+        <Text style={styles.button}>Display Learn More Modal</Text>
+      </TouchableHighlight>
+
+      {/* Get Offers Fee */}
+      <TouchableHighlight
+        style={
+          isDarkTheme() ? darkStyles.buttonContainer : styles.buttonContainer
+        }
+        onPress={getOffersFee}
+      >
+        <Text style={styles.button}>Send Offers Fee Request</Text>
+      </TouchableHighlight>
     </SafeAreaView>
   );
 }
@@ -119,6 +148,7 @@ const styles = StyleSheet.create({
     lineHeight: 33.6,
   },
   input: {
+    color: 'black',
     flex: 1,
     marginLeft: 16,
     paddingHorizontal: 8,
@@ -129,7 +159,7 @@ const styles = StyleSheet.create({
   },
   widget: {
     marginHorizontal: 16,
-    height: Platform.OS === 'ios' ? 32 : 35,
+    height: 39,
   },
   buttonContainer: {
     marginTop: 16,
@@ -146,5 +176,34 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 17,
     lineHeight: 33.6,
+  },
+});
+
+const darkStyles = StyleSheet.create({
+  title: {
+    color: 'white',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 17,
+    lineHeight: 33.6,
+  },
+  input: {
+    color: 'white',
+    flex: 1,
+    marginLeft: 16,
+    paddingHorizontal: 8,
+    borderRadius: 6,
+    borderColor: '#EEEEEE',
+    borderWidth: 1,
+    minHeight: 40,
+  },
+  buttonContainer: {
+    marginTop: 16,
+    borderRadius: 10,
+    height: 50,
+    marginHorizontal: 16,
+    backgroundColor: '#FFCF4D',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
