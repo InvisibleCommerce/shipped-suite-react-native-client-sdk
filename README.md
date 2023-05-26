@@ -60,6 +60,7 @@ You can initialize it and put it where you want.
 ```js
 import {
   ShippedSuite,
+  ShippedSuiteAppearance,
   ShippedSuiteType,
   WidgetChangeEventData,
   WidgetView
@@ -73,7 +74,8 @@ import {
     isInformational: true,
     isMandatory: false,
     isRespectServer: false,
-    currency: "USD"
+    currency: "USD",
+    appearance: ShippedSuiteAppearance.Auto
   }}
   onChange={onWidgetChange}
 />
@@ -119,7 +121,8 @@ ShippedSuite.getOffersFee(amount, currency)
 ```js
 ShippedSuite.displayLearnMoreModal({
   type: ShippedSuiteType.Green,
-  isInformational: true
+  isInformational: true,
+  appearance: ShippedSuiteAppearance.Auto
 });
 ```
 
