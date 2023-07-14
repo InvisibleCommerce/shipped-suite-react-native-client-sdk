@@ -6,12 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		57ECE28528E2E46D0023B443 /* RNWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 57ECE28428E2E33E0023B443 /* RNWidgetView.m */; };
-		57ECE28628E2E47B0023B443 /* RNWidgetViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 57ECE28228E2DE430023B443 /* RNWidgetViewManager.m */; };
-		57ECE28728E2E47D0023B443 /* ShippedSuiteSdk.mm in Sources */ = {isa = PBXBuildFile; fileRef = 57C0E4C728E1CEF5005DA406 /* ShippedSuiteSdk.mm */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		58B511D91A9E6C8500147676 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -26,12 +20,12 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libShippedSuiteSdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libShippedSuiteSdk.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		57C0E4C728E1CEF5005DA406 /* ShippedSuiteSdk.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ShippedSuiteSdk.mm; sourceTree = "<group>"; };
-		57ECE28128E2DE430023B443 /* RNWidgetViewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNWidgetViewManager.h; sourceTree = "<group>"; };
-		57ECE28228E2DE430023B443 /* RNWidgetViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNWidgetViewManager.m; sourceTree = "<group>"; };
-		57ECE28328E2E33E0023B443 /* RNWidgetView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNWidgetView.h; sourceTree = "<group>"; };
-		57ECE28428E2E33E0023B443 /* RNWidgetView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNWidgetView.m; sourceTree = "<group>"; };
+		5756BB622A6122C700C9E946 /* RNWidgetViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNWidgetViewManager.m; sourceTree = "<group>"; };
+		5756BB632A6122C700C9E946 /* RNWidgetViewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNWidgetViewManager.h; sourceTree = "<group>"; };
+		5756BB642A6122C700C9E946 /* RNWidgetView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNWidgetView.h; sourceTree = "<group>"; };
+		5756BB652A6122C700C9E946 /* RNWidgetView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNWidgetView.m; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* ShippedSuiteSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShippedSuiteSdk.h; sourceTree = "<group>"; };
+		B3E7B5891CC2AC0600A0062D /* ShippedSuiteSdk.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShippedSuiteSdk.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,12 +50,12 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-				57ECE28328E2E33E0023B443 /* RNWidgetView.h */,
-				57ECE28428E2E33E0023B443 /* RNWidgetView.m */,
-				57ECE28128E2DE430023B443 /* RNWidgetViewManager.h */,
-				57ECE28228E2DE430023B443 /* RNWidgetViewManager.m */,
+				5756BB642A6122C700C9E946 /* RNWidgetView.h */,
+				5756BB652A6122C700C9E946 /* RNWidgetView.m */,
+				5756BB632A6122C700C9E946 /* RNWidgetViewManager.h */,
+				5756BB622A6122C700C9E946 /* RNWidgetViewManager.m */,
 				B3E7B5881CC2AC0600A0062D /* ShippedSuiteSdk.h */,
-				57C0E4C728E1CEF5005DA406 /* ShippedSuiteSdk.mm */,
+				B3E7B5891CC2AC0600A0062D /* ShippedSuiteSdk.mm */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -123,9 +117,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57ECE28628E2E47B0023B443 /* RNWidgetViewManager.m in Sources */,
-				57ECE28728E2E47D0023B443 /* ShippedSuiteSdk.mm in Sources */,
-				57ECE28528E2E46D0023B443 /* RNWidgetView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
