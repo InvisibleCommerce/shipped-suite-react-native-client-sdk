@@ -3,7 +3,7 @@
 exports[`renders a WidgetView using Snapshots 1`] = `
 <RNWidgetView
   configuration={
-    Object {
+    {
       "appearance": 0,
       "currency": "USD",
       "isInformational": true,

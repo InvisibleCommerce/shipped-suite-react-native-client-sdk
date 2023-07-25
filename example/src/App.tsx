@@ -72,8 +72,8 @@ export default function App() {
   }, []);
 
   React.useEffect(() => {
-    Appearance.addChangeListener(themeChangeListener);
-    return () => Appearance.removeChangeListener(themeChangeListener);
+    const subscription = Appearance.addChangeListener(themeChangeListener);
+    return () => subscription.remove();
   }, [themeChangeListener]);
 
   const isDarkTheme = () => {
