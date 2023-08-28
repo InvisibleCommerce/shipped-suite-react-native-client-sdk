@@ -378,7 +378,7 @@ PODS:
   - react-native-shipped-suite-sdk (1.0.3):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-    - ShippedSuite
+    - ShippedSuite (~> 1.0)
   - React-NativeModulesApple (0.72.3):
     - hermes-engine
     - React-callinvoker
@@ -696,7 +696,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 59d1eb03af7d30b7d66589c410f13151271e8006
   React-jsinspector: b511447170f561157547bc0bef3f169663860be7
   React-logger: c5b527272d5f22eaa09bb3c3a690fee8f237ae95
-  react-native-shipped-suite-sdk: 6b8f05c79cd0b401dead284db558ecea234b2c4c
+  react-native-shipped-suite-sdk: 535fa0ad144720a61c43bbf828a580825f260d5e
   React-NativeModulesApple: c57f3efe0df288a6532b726ad2d0322a9bf38472
   React-perflogger: 6bd153e776e6beed54c56b0847e1220a3ff92ba5
   React-RCTActionSheet: c0b62af44e610e69d9a2049a682f5dba4e9dff17
