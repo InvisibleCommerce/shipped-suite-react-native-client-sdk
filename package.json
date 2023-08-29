@@ -1,6 +1,6 @@
 {
   "name": "react-native-shipped-suite-sdk",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Shipped Shield offers premium package assurance for shipments that are lost, damaged or stolen. Instantly track and resolve shipment issues hassle-free with the app.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
