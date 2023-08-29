@@ -378,7 +378,7 @@ PODS:
   - react-native-shipped-suite-sdk (1.0.3):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-    - ShippedSuite (~> 1.0)
+    - ShippedSuite (~> 1.0.2)
   - React-NativeModulesApple (0.72.3):
     - hermes-engine
     - React-callinvoker
@@ -489,7 +489,7 @@ PODS:
     - React-jsi (= 0.72.3)
     - React-logger (= 0.72.3)
     - React-perflogger (= 0.72.3)
-  - ShippedSuite (1.0.1)
+  - ShippedSuite (1.0.2)
   - SocketRocket (0.6.1)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -696,7 +696,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 59d1eb03af7d30b7d66589c410f13151271e8006
   React-jsinspector: b511447170f561157547bc0bef3f169663860be7
   React-logger: c5b527272d5f22eaa09bb3c3a690fee8f237ae95
-  react-native-shipped-suite-sdk: 535fa0ad144720a61c43bbf828a580825f260d5e
+  react-native-shipped-suite-sdk: 915b57f24475d6ea43f18e9869936700fca8a1c0
   React-NativeModulesApple: c57f3efe0df288a6532b726ad2d0322a9bf38472
   React-perflogger: 6bd153e776e6beed54c56b0847e1220a3ff92ba5
   React-RCTActionSheet: c0b62af44e610e69d9a2049a682f5dba4e9dff17
@@ -714,7 +714,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 837c1bebd2f84572db17698cd702ceaf585b0d9a
   React-utils: bcb57da67eec2711f8b353f6e3d33bd8e4b2efa3
   ReactCommon: 3ccb8fb14e6b3277e38c73b0ff5e4a1b8db017a9
-  ShippedSuite: 5e5430b7d262fadf63a2b2b30229d59a8772dcf6
+  ShippedSuite: 1c523c4810a14185a64eda0f9f2c4bda54a77c21
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 8796b55dba14d7004f980b54bcc9833ee45b28ce
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
